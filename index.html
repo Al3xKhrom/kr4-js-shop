@@ -1,5 +1,4 @@
 <!DOCTYPE html>
-
 <html lang="ru">
 <head>
 <meta charset="utf-8"/>
@@ -8,12 +7,10 @@
 <link href="css/style.css" rel="stylesheet"/>
 <link href="css/responsive.css" rel="stylesheet"/>
 <link href="css/accessibility.css" rel="stylesheet"/>
-<script defer="" src="js/data.js"></script>
-<script defer="" src="js/main.js"></script><script defer="" src="js/validation.js"></script>
 <meta content="website" property="og:type"/>
 <meta content="Учебный интернет-магазин" property="og:title"/>
 <meta content="Учебный frontend-проект интернет-магазина." property="og:description"/>
-</head>
+<script defer="" src="js/data.js"></script><script defer="" src="js/main.js"></script><script defer="" src="js/cart.js"></script><script defer="" src="js/modal.js"></script><script defer="" src="js/validation.js"></script></head>
 <body id="top">
 <a class="skip-link" href="#main">Перейти к основному содержимому</a>
 <header class="site-header">
@@ -24,7 +21,7 @@
 <ul class="site-nav__list">
 <li class="site-nav__item"><a aria-current="page" class="site-nav__link site-nav__link--active" href="index.html">Главная</a></li>
 <li class="site-nav__item"><a class="site-nav__link" href="catalog.html">Каталог</a></li>
-<li class="site-nav__item"><a class="site-nav__link" href="order.html">Оформление</a></li>
+<li class="site-nav__item"><a class="site-nav__link" href="cart.html">Корзина (<span data-header-cart-count="">0</span>)</a></li><li class="site-nav__item"><a class="site-nav__link" href="order.html">Оформление</a></li>
 <li class="site-nav__item"><a class="site-nav__link" href="contacts.html">Контакты</a></li>
 <li class="site-nav__item"><a class="site-nav__link" href="index.html#popular">Популярные товары</a></li>
 <li class="site-nav__item"><a class="site-nav__link" href="index.html#advantages">Преимущества</a></li>
@@ -53,7 +50,7 @@
 <span class="product-card__badge">Хит продаж</span>
 <h3 class="product-card__title">Наушники воздушные капсулы про</h3>
 <p class="product-card__description">Беспроводные наушники с активным шумоподавлением от внешнего мира.</p>
-<p class="product-card__price">Цена: 5000 руб.</p>
+<p class="product-card__price">Цена со скидкой: 4 500 руб.</p>
 <div class="product-card__actions">
 <button aria-controls="order-dialog" aria-haspopup="dialog" aria-label="Заказать: Наушники воздушные капсулы про" class="button button--primary product-card__button" data-product="Беспроводные наушники" style="margin-top: 0;" type="button">Заказать</button>
 <a aria-label="Подробнее о наушниках" class="button button--secondary" href="product.html">Подробнее</a>
@@ -81,7 +78,7 @@
 <span class="product-card__badge">Хит продаж</span>
 <h3 class="product-card__title">Микрофон (не китайский) </h3>
 <p class="product-card__description">Мощный и крутой микрофон. Выбор стримеров и блогеров.</p>
-<p class="product-card__price">Цена: 8000 руб.</p>
+<p class="product-card__price">Цена со скидкой: 7 600 руб.</p>
 <div class="product-card__actions">
 <button aria-controls="order-dialog" aria-haspopup="dialog" aria-label="Заказать: Микрофон (не китайский)" class="button button--primary product-card__button" data-product="Микрофон" style="margin-top: 0;" type="button">Заказать</button>
 <a aria-label="Оформить заявку: Микрофон (не китайский)" class="button button--secondary" href="order.html">Оформить</a>

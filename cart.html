@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="ru"><head><meta charset="utf-8"/><meta content="width=device-width, initial-scale=1.0" name="viewport"/><meta content="Каталог товаров учебного интернет-магазина." name="description"/><title>Корзина — Учебный интернет-магазин</title><link href="css/style.css" rel="stylesheet"/><link href="css/responsive.css" rel="stylesheet"/><link href="css/accessibility.css" rel="stylesheet"/><meta content="website" property="og:type"/><meta content="Учебный интернет-магазин" property="og:title"/><meta content="Учебный frontend-проект интернет-магазина." property="og:description"/><script defer="" src="js/data.js"></script><script defer="" src="js/main.js"></script><script defer="" src="js/cart.js"></script></head><body id="top"><a class="skip-link" href="#main">Перейти к основному содержимому</a><header class="site-header">
+<div class="site-header__inner">
+<a class="site-header__logo" href="index.html">ShopProject</a>
+<button aria-controls="site-menu" aria-expanded="false" class="button button--secondary menu-toggle" hidden="" type="button">Меню</button>
+<nav aria-label="Основная навигация" class="site-nav" id="site-menu">
+<ul class="site-nav__list">
+<li class="site-nav__item"><a class="site-nav__link" href="index.html">Главная</a></li>
+<li class="site-nav__item"><a class="site-nav__link" href="catalog.html">Каталог</a></li>
+<li class="site-nav__item"><a aria-current="page" class="site-nav__link site-nav__link--active" href="cart.html">Корзина (<span data-header-cart-count="">0</span>)</a></li><li class="site-nav__item"><a class="site-nav__link" href="order.html">Оформление</a></li>
+<li class="site-nav__item"><a class="site-nav__link" href="contacts.html">Контакты</a></li>
+<li class="site-nav__item"><a class="site-nav__link" href="index.html#popular">Популярные товары</a></li>
+<li class="site-nav__item"><a class="site-nav__link" href="index.html#advantages">Преимущества</a></li>
+</ul>
+</nav>
+</div>
+</header><main id="main" tabindex="-1">
+<nav aria-label="Хлебные крошки" class="breadcrumbs"><a class="breadcrumbs__link" href="index.html">Главная</a><a class="breadcrumbs__link" href="catalog.html">Каталог</a><span aria-current="page" class="breadcrumbs__current">Корзина</span></nav>
+<section class="section">
+<h1>Корзина</h1><p>Проверьте товары и количество перед оформлением учебной заявки.</p>
+<div class="cart-page-grid">
+<div class="cart-page-list">
+<p class="catalog-empty" data-cart-empty="" hidden="">В корзине пока нет товаров. <a href="catalog.html">Перейти в каталог</a>.</p>
+<div aria-live="polite" data-cart-items=""></div>
+</div>
+<aside aria-label="Итоги корзины" class="cart-preview cart-checkout">
+<h2>Итого</h2><p>Товаров: <strong data-cart-count="">0</strong></p>
+<p>Сумма со скидками товаров: <strong data-cart-subtotal="">0 руб.</strong></p>
+<p>Скидка по промокоду: <strong data-cart-promo-discount="">0 руб.</strong></p>
+<p class="cart-checkout__total">К оплате (учебный расчёт): <strong data-cart-final="">0 руб.</strong></p>
+<form class="cart-promo-form" data-cart-promo-form="">
+<label for="cart-promo">Промокод</label>
+<input autocomplete="off" class="catalog-controls__input" data-cart-promo-input="" id="cart-promo" placeholder="STUDENT10"/>
+<button class="button button--secondary" type="submit">Применить</button>
+</form>
+<p class="form-note">Учебный промокод STUDENT10 даёт ещё 10% скидки после скидок товаров.</p>
+<p aria-live="polite" class="cart-message" data-cart-message="" role="status"></p>
+<div class="cart-checkout__actions"><a class="button button--primary" href="order.html">Оформить заявку</a><button class="button button--secondary" data-cart-clear="" type="button">Очистить корзину</button></div>
+<p class="form-note">Оплата и отправка заказа на сервер не выполняются.</p>
+</aside>
+</div>
+</section></main><footer>
+<p>© 2026 Учебный проект. Все права защищены.</p>
+<p>Дисциплина: Фронтенд и бэкенд разработка</p>
+</footer></body></html>

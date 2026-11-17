@@ -38,6 +38,8 @@ const orderHtml = read('order.html');
 const main = read('js/main.js');
 const catalog = read('js/catalog.js');
 const validation = read('js/validation.js');
+const cart = read('js/cart.js');
+const modal = read('js/modal.js');
 test('Нужные JS-файлы подключены к каталогу по порядку', () => {
     const paths = ['js/data.js','js/main.js','js/catalog.js','js/validation.js'];
     const offsets = paths.map(name => catalogHtml.indexOf(name));
@@ -60,15 +62,15 @@ test('Каталог поддерживает поиск, фильтрацию, 
 });
 test('Добавление товара использует делегирование событий', () => {
     assert.match(catalog, /container\.addEventListener\('click'/);
-    assert.match(catalog, /event\.target\.closest/);
+    assert.match(catalog, /target\.closest/);
     assert.match(catalog, /dataset\.productId/);
-    assert.match(main, /document\.addEventListener\('click'/);
+    assert.match(modal, /document\.addEventListener\('click'/);
 });
 test('Учебная корзина сохраняет только id товара и количество', () => {
-    assert(catalog.includes('localStorage.setItem'));
-    assert(catalog.includes('JSON.stringify(cart)'));
-    assert(catalog.includes('loadCart()'));
-    assert(!/localStorage\.setItem\([^,]+,\s*JSON\.stringify\((?:requestData|formData)/.test(catalog));
+    assert(cart.includes('localStorage.setItem'));
+    assert(cart.includes('JSON.stringify(cart)'));
+    assert(cart.includes('restoreCart()'));
+    assert(!/localStorage\.setItem\([^,]+,\s*JSON\.stringify\((?:requestData|formData)/.test(cart));
 });
 test('Форма заявки подключает validation.js', () => assert(orderHtml.includes('js/validation.js')));
 test('Валидация использует ошибки для каждого поля и preventDefault', () => {

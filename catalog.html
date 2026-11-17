@@ -1,5 +1,4 @@
 <!DOCTYPE html>
-
 <html lang="ru">
 <head>
 <meta charset="utf-8"/>
@@ -9,12 +8,10 @@
 <link href="css/style.css" rel="stylesheet"/>
 <link href="css/responsive.css" rel="stylesheet"/>
 <link href="css/accessibility.css" rel="stylesheet"/>
-<script defer="" src="js/data.js"></script>
-<script defer="" src="js/main.js"></script><script defer="" src="js/catalog.js"></script><script defer="" src="js/validation.js"></script>
 <meta content="website" property="og:type"/>
 <meta content="Учебный интернет-магазин" property="og:title"/>
 <meta content="Учебный frontend-проект интернет-магазина." property="og:description"/>
-</head>
+<script defer="" src="js/data.js"></script><script defer="" src="js/main.js"></script><script defer="" src="js/cart.js"></script><script defer="" src="js/favorites.js"></script><script defer="" src="js/catalog.js"></script><script defer="" src="js/modal.js"></script><script defer="" src="js/validation.js"></script></head>
 <body id="top">
 <a class="skip-link" href="#main">Перейти к основному содержимому</a>
 <header class="site-header">
@@ -25,7 +22,7 @@
 <ul class="site-nav__list">
 <li class="site-nav__item"><a class="site-nav__link" href="index.html">Главная</a></li>
 <li class="site-nav__item"><a aria-current="page" class="site-nav__link site-nav__link--active" href="catalog.html">Каталог</a></li>
-<li class="site-nav__item"><a class="site-nav__link" href="order.html">Оформление</a></li>
+<li class="site-nav__item"><a class="site-nav__link" href="cart.html">Корзина (<span data-header-cart-count="">0</span>)</a></li><li class="site-nav__item"><a class="site-nav__link" href="order.html">Оформление</a></li>
 <li class="site-nav__item"><a class="site-nav__link" href="contacts.html">Контакты</a></li>
 <li class="site-nav__item"><a class="site-nav__link" href="index.html#popular">Популярные товары</a></li>
 <li class="site-nav__item"><a class="site-nav__link" href="index.html#advantages">Преимущества</a></li>
@@ -70,14 +67,14 @@
 <h2>Список товаров</h2><div aria-label="Управление каталогом" class="catalog-controls">
 <div class="catalog-controls__group"><label for="catalog-search">Поиск товара</label><input autocomplete="off" class="catalog-controls__input" id="catalog-search" placeholder="Введите название товара" type="search"/></div>
 <div class="catalog-controls__group"><label for="sort-select">Сортировка</label><select class="catalog-controls__select" id="sort-select"><option value="default">По умолчанию</option><option value="price-asc">Сначала дешевле</option><option value="price-desc">Сначала дороже</option><option value="title-asc">По названию А–Я</option></select></div>
-</div>
+</div><label class="catalog-favorites"><input id="favorites-only" type="checkbox"/> Только избранные (<span data-favorites-count="">0</span>)</label>
 <p aria-live="polite" class="catalog-count" id="filter-status" role="status">Найдено товаров: 9</p>
-<p class="catalog-empty" hidden="" id="filter-empty">По выбранным условиям товары не найдены. Попробуйте другой запрос.</p>
+<p class="catalog-empty" hidden="" id="filter-empty">По выбранным условиям товары не найдены. Попробуйте другой запрос. <button class="button button--secondary" data-reset-empty="" type="button">Сбросить фильтры</button></p>
 <section aria-labelledby="cart-preview-title" class="cart-preview">
-<h3 id="cart-preview-title">Учебная корзина</h3>
+<h3 id="cart-preview-title">Корзина</h3>
 <p>Позиций: <strong data-cart-count="">0</strong> · Сумма со скидками: <strong data-cart-total="">0 руб.</strong></p>
 <button class="button button--secondary" data-cart-clear="" type="button">Очистить корзину</button>
-<p aria-live="polite" class="cart-message" data-cart-message="" role="status"></p>
+<a class="button button--primary" href="cart.html">Перейти в корзину</a><p aria-live="polite" class="cart-message" data-cart-message="" role="status"></p>
 </section><div class="products-grid" data-products-container=""></div><noscript>Для работы интерактивного каталога включите JavaScript в браузере.</noscript>
 </section>
 </section>

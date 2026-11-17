@@ -14,12 +14,11 @@
     const errorElement = document.querySelector('#filter-error');
     const countElement = document.querySelector('.catalog-count');
     const emptyElement = document.querySelector('.catalog-empty');
-    const cartCount = document.querySelector('[data-cart-count]');
-    const cartTotal = document.querySelector('[data-cart-total]');
+    const favoritesToggle = document.querySelector('#favorites-only');
+    const resetEmptyButton = document.querySelector('[data-reset-empty]');
     const cartMessage = document.querySelector('[data-cart-message]');
-    const clearCartButton = document.querySelector('[data-cart-clear]');
 
-    const catalogState = { query: '', category: 'all', sort: 'default', minPrice: 0, maxPrice: Infinity };
+    const catalogState = { query: '', category: 'all', sort: 'default', minPrice: 0, maxPrice: Infinity, favoritesOnly: false };
 
     // Не допускаем сортировку исходного массива. Функции №16 вызываются повторно.
     function sortProducts(items, type) {
@@ -34,6 +33,7 @@
         let result = searchProducts(items, state.query);
         result = filterProductsByCategory(result, state.category);
         result = result.filter((item) => item.price >= state.minPrice && item.price <= state.maxPrice);
+        if (state.favoritesOnly) result = result.filter((item) => window.ShopFavorites.has(item.id));
         return sortProducts(result, state.sort);
     }
 
@@ -68,6 +68,17 @@
             card.append(badge);
         }
 
+        const favoriteButton = document.createElement('button');
+        favoriteButton.type = 'button';
+        favoriteButton.classList.add('favorite-toggle');
+        favoriteButton.classList.toggle('is-active', window.ShopFavorites.has(item.id));
+        favoriteButton.dataset.action = 'toggle-favorite';
+        favoriteButton.dataset.productId = String(item.id);
+        favoriteButton.setAttribute('aria-label', `Избранное: ${item.title}`);
+        favoriteButton.setAttribute('aria-pressed', String(window.ShopFavorites.has(item.id)));
+        favoriteButton.title = 'Добавить или убрать из избранного';
+        favoriteButton.textContent = window.ShopFavorites.has(item.id) ? '♥' : '♡';
+
         const title = document.createElement('h3');
         title.classList.add('product-card__title');
         title.textContent = item.title;
@@ -75,6 +86,10 @@
         const description = document.createElement('p');
         description.classList.add('product-card__description');
         description.textContent = item.description;
+
+        const rating = document.createElement('p');
+        rating.classList.add('product-card__rating');
+        rating.textContent = `★ ${item.rating.toFixed(1)} · ${item.category === 'audio' ? 'Аудиотехника' : item.category === 'console' ? 'Консоли' : 'Аксессуары'}`;
 
         const price = document.createElement('p');
         price.classList.add('product-card__price');
@@ -114,7 +129,7 @@
         cartButton.disabled = !item.isAvailable;
 
         actions.append(orderButton, cartButton);
-        card.append(picture, title, description, price, availability, actions);
+        card.append(picture, favoriteButton, title, description, rating, price, availability, actions);
         return card;
     }
 
@@ -125,6 +140,8 @@
         container.replaceChildren(fragment);
         countElement.textContent = `Найдено товаров: ${items.length}`;
         emptyElement.hidden = items.length > 0;
+        const favoritesCount = document.querySelector('[data-favorites-count]');
+        if (favoritesCount) favoritesCount.textContent = String(window.ShopFavorites.count());
     }
 
     function readPriceFilters() {
@@ -183,65 +200,38 @@
         wide.addEventListener('change', sync);
     }
 
-    // Дополнение КР №4: компактная учебная корзина с localStorage.
-    // Сохраняем только id товара и количество. Персональные данные формы не сохраняем.
-    const CART_KEY = 'kr4-js-shop-cart';
-    function loadCart() {
-        try {
-            const raw = localStorage.getItem(CART_KEY);
-            const parsed = raw ? JSON.parse(raw) : [];
-            if (!Array.isArray(parsed)) return [];
-            return parsed.filter((item) => Number.isInteger(item.productId) &&
-                Number.isInteger(item.quantity) && item.quantity > 0 && item.quantity <= 99 &&
-                products.some((product) => product.id === item.productId && product.isAvailable));
-        } catch {
-            return [];
-        }
-    }
-    let cart = loadCart();
-
-    function saveCart() {
-        try { localStorage.setItem(CART_KEY, JSON.stringify(cart)); }
-        catch { cartMessage.textContent = 'Не удалось сохранить корзину в браузере.'; }
-    }
-    function renderCart() {
-        const count = cart.reduce((sum, item) => sum + item.quantity, 0);
-        const sum = cart.reduce((total, item) => {
-            const product = products.find((p) => p.id === item.productId);
-            return total + (product ? calculateFinalPrice(product.price, product.discountPercent) * item.quantity : 0);
-        }, 0);
-        cartCount.textContent = String(count);
-        cartTotal.textContent = formatPrice(sum);
-        clearCartButton.disabled = count === 0;
-    }
+    // Делегирование событий: обработчик остаётся после перерисовки карточек.
     container.addEventListener('click', (event) => {
-        const button = event.target.closest('[data-action="add-to-cart"]');
-        if (!button || !container.contains(button) || button.disabled) return;
-        const itemId = Number(button.dataset.productId);
-        const item = products.find((p) => p.id === itemId && p.isAvailable);
-        if (!item) return;
-        let entry = cart.find((p) => p.productId === itemId);
-        if (entry) {
-            if (entry.quantity >= 99) {
-                cartMessage.textContent = 'Максимум 99 экземпляров одного товара.';
-                return;
-            }
-            entry.quantity += 1;
-        } else {
-            cart.push({ productId: itemId, quantity: 1 });
+        const target = event.target instanceof Element ? event.target : event.target?.parentElement;
+        if (!target) return;
+        const favoriteButton = target.closest('[data-action="toggle-favorite"]');
+        if (favoriteButton && container.contains(favoriteButton)) {
+            const id = Number(favoriteButton.dataset.productId);
+            const added = window.ShopFavorites.toggle(id);
+            cartMessage.textContent = added ? 'Товар добавлен в избранное.' : 'Товар удалён из избранного.';
+            updateCatalog();
+            return;
         }
-        saveCart();
-        renderCart();
-        cartMessage.textContent = `Добавлено в корзину: ${item.title}`;
-        console.log('Практика №17 — выбран товар:', itemId);
+        // Кнопку добавления обслуживает общий обработчик js/cart.js.
+        // Событие click всплывает к document и работает после повторного render.
     });
-    clearCartButton.addEventListener('click', () => {
-        cart = [];
-        saveCart();
-        renderCart();
-        cartMessage.textContent = 'Корзина очищена.';
+
+    favoritesToggle?.addEventListener('change', (event) => {
+        catalogState.favoritesOnly = event.target.checked;
+        updateCatalog();
     });
-    renderCart();
+    resetEmptyButton?.addEventListener('click', () => {
+        searchInput.value = '';
+        sortSelect.value = 'default';
+        favoritesToggle.checked = false;
+        filtersForm.reset();
+        catalogState.query = '';
+        catalogState.sort = 'default';
+        catalogState.category = 'all';
+        catalogState.favoritesOnly = false;
+        updateCatalog();
+        searchInput.focus();
+    });
     updateCatalog();
-    console.log('Практика №17: динамический каталог подключён, товаров:', products.length);
+    console.log('КР №4: интерактивный каталог подключён, товаров:', products.length);
 })();

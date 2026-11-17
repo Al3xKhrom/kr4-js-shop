@@ -531,3 +531,50 @@ a:focus-visible {
 .cart-message { min-height: 1.5em; color: var(--color-success); }
 .form-message { margin: 8px 0 0; grid-column: 1 / -1; }
 @media (max-width: 639px) { .catalog-controls { grid-template-columns: 1fr; } }
+
+/* КР №4: расширения в исходной тёмно-синей дизайн-системе. */
+.catalog-favorites { display: flex; align-items: center; gap: 8px; margin: 10px 0; font-weight: 600; }
+.catalog-favorites input { width: 18px; height: 18px; accent-color: var(--color-primary); }
+.favorite-toggle {
+    position: absolute; top: 12px; right: 12px; z-index: 1;
+    display: grid; place-items: center; width: 40px; height: 40px;
+    border: 1px solid var(--color-border); border-radius: 50%;
+    background: var(--color-surface-accent); color: var(--color-text);
+    font: inherit; font-size: 26px; cursor: pointer;
+}
+.favorite-toggle.is-active { color: #fb7185; }
+.favorite-toggle:hover, .favorite-toggle:focus-visible { outline: 2px solid var(--color-primary); outline-offset: 2px; }
+.product-card__rating { margin: 0 0 4px; color: var(--color-muted); font-size: 14px; }
+.cart-page-grid { display: grid; grid-template-columns: minmax(0, 2fr) minmax(255px, 1fr); gap: var(--space-lg); align-items: start; }
+.cart-page-list { min-width: 0; }
+.cart-line {
+    display: flex; align-items: center; gap: var(--space-md);
+    border: 1px solid var(--color-border); border-radius: var(--radius-md);
+    padding: var(--space-md); margin-bottom: var(--space-md); background: var(--color-surface);
+}
+.cart-line__image { display: block; width: 96px; height: 96px; object-fit: contain; border-radius: var(--radius-sm); flex-shrink: 0; }
+.cart-line__details { min-width: 0; flex: 1; }
+.cart-line__details h3 { margin: 0 0 4px; }
+.cart-line__price { font-size: 14px; color: var(--color-muted); margin: 0 0 10px; }
+.cart-line__controls { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; }
+.cart-line__controls .button { padding: 7px 12px; min-width: 36px; }
+.cart-line__quantity { min-width: 24px; text-align: center; font-weight: 700; }
+.cart-line__sum { white-space: nowrap; }
+.cart-checkout { margin: 0; }
+.cart-checkout h2 { margin-top: 0; }
+.cart-checkout__total { border-top: 1px solid var(--color-border); padding-top: 12px; font-weight: 700; }
+.cart-promo-form { display: grid; gap: 8px; margin: 16px 0; }
+.cart-checkout__actions { display: flex; flex-direction: column; gap: 10px; }
+.cart-checkout__actions .button { text-align: center; }
+.cart-preview a.button { display: inline-block; text-decoration: none; margin-right: 8px; }
+@media (max-width: 760px) {
+    .cart-page-grid { grid-template-columns: 1fr; }
+    .cart-line { flex-wrap: wrap; }
+    .cart-line__sum { margin-left: auto; }
+}
+@media (max-width: 410px) {
+    .cart-line__image { width: 72px; height: 72px; }
+    .cart-line__sum { width: 100%; text-align: right; }
+}
+/* Бейдж скидки остаётся на прежнем месте; избранное — в противоположном углу. */
+.favorite-toggle { left: 12px; right: auto; }

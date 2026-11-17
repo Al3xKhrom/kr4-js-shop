@@ -162,42 +162,8 @@ if (productOutputElement) {
     ].join('\n');
 }
 
-// Обработчики из предыдущих практик сохранены ниже.
-const orderDialog = document.getElementById('order-dialog');
-const selectedProduct = document.getElementById('selected-product');
-let dialogTrigger = null;
-
-// Native dialog provides focus containment and Escape handling.
-// Делегирование: работает и с карточками, созданными позже через createElement().
-if (orderDialog) {
-    document.addEventListener('click', (event) => {
-        const button = event.target.closest('.product-card__button[data-product]');
-        if (!button || button.disabled) return;
-        dialogTrigger = button;
-        if (selectedProduct) selectedProduct.value = button.dataset.product;
-        orderDialog.showModal();
-        orderDialog.querySelector('input:not([type="hidden"])')?.focus();
-    });
-}
-// Keep Tab and Shift+Tab cycling through controls in the open dialog.
-orderDialog?.addEventListener('keydown', (event) => {
-    if (event.key !== 'Tab') return;
-    const controls = Array.from(orderDialog.querySelectorAll('button, input:not([type="hidden"]), select, textarea, a[href], [tabindex="0"]'))
-        .filter((element) => !element.disabled && element.getClientRects().length);
-    const first = controls[0];
-    const last = controls[controls.length - 1];
-    if (event.shiftKey && document.activeElement === first) {
-        event.preventDefault();
-        last?.focus();
-    } else if (!event.shiftKey && document.activeElement === last) {
-        event.preventDefault();
-        first?.focus();
-    }
-});
-document.getElementById('close-order-dialog')?.addEventListener('click', () => orderDialog?.close());
-orderDialog?.addEventListener('close', () => {
-    if (dialogTrigger?.isConnected) dialogTrigger.focus({ preventScroll: true });
-});
+// Открытие модального окна вынесено в js/modal.js (КР №4).
+// Остальные функции практик №15–16 сохранены для демонстрации.
 
 document.querySelector('.skip-link')?.addEventListener('click', () => {
     document.getElementById('main')?.focus();

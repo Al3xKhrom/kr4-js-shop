@@ -1,5 +1,4 @@
 <!DOCTYPE html>
-
 <html lang="ru">
 <head>
 <meta charset="utf-8"/>
@@ -8,9 +7,7 @@
 <link href="css/style.css" rel="stylesheet"/>
 <link href="css/responsive.css" rel="stylesheet"/>
 <link href="css/accessibility.css" rel="stylesheet"/>
-<script defer="" src="js/data.js"></script>
-<script defer="" src="js/main.js"></script><script defer="" src="js/validation.js"></script>
-</head>
+<script defer="" src="js/data.js"></script><script defer="" src="js/main.js"></script><script defer="" src="js/cart.js"></script><script defer="" src="js/modal.js"></script><script defer="" src="js/validation.js"></script></head>
 <body id="top">
 <a class="skip-link" href="#main">Перейти к основному содержимому</a>
 <header class="site-header">
@@ -21,7 +18,7 @@
 <ul class="site-nav__list">
 <li class="site-nav__item"><a class="site-nav__link" href="index.html">Главная</a></li>
 <li class="site-nav__item"><a class="site-nav__link" href="catalog.html">Каталог</a></li>
-<li class="site-nav__item"><a class="site-nav__link" href="order.html">Оформление</a></li>
+<li class="site-nav__item"><a class="site-nav__link" href="cart.html">Корзина (<span data-header-cart-count="">0</span>)</a></li><li class="site-nav__item"><a class="site-nav__link" href="order.html">Оформление</a></li>
 <li class="site-nav__item"><a class="site-nav__link" href="contacts.html">Контакты</a></li>
 <li class="site-nav__item"><a class="site-nav__link" href="index.html#popular">Популярные товары</a></li>
 <li class="site-nav__item"><a class="site-nav__link" href="index.html#advantages">Преимущества</a></li>
@@ -45,7 +42,7 @@
 </div>
 <div class="product-layout__info">
 <h1 style="margin-top: 0;">Наушники воздушные капсулы про</h1>
-<p class="product-card__price" style="font-size: 24px; color: var(--color-primary);">5 000 руб.</p>
+<p class="product-card__price" style="font-size: 24px; color: var(--color-primary);">Цена со скидкой: 4 500 руб. (вместо 5 000 руб.)</p>
 <p>Беспроводные наушники с активным шумоподавлением от внешнего мира. Идеальный выбор для повседневного прослушивания музыки и звонков.</p>
 <section aria-labelledby="mobile-specs-title" class="mobile-specs"><h2 id="mobile-specs-title">Характеристики товара</h2><dl><div><dt>Тип</dt><dd>Беспроводные (Bluetooth 5.0)</dd></div><div><dt>Шумоподавление</dt><dd>Активное (ANC)</dd></div><div><dt>Время работы</dt><dd>До 24 часов с кейсом</dd></div><div><dt>Гарантия</dt><dd>1 год</dd></div></dl></section>
 <div aria-label="Характеристики товара — горизонтальная прокрутка" class="table-wrapper desktop-specs" role="region" tabindex="0">
@@ -78,7 +75,7 @@
 </table>
 </div>
 <div class="product-actions">
-<button aria-controls="order-dialog" aria-haspopup="dialog" class="button button--primary product-card__button" data-product="Наушники" type="button">Заказать</button>
+<button aria-controls="order-dialog" aria-haspopup="dialog" class="button button--primary product-card__button" data-product="Наушники" type="button">Заказать</button><button class="button button--secondary" data-action="add-to-cart" data-product-id="1" type="button">В корзину</button><p aria-live="polite" class="cart-message" data-cart-message="" role="status"></p>
 <a class="button button--secondary" href="order.html">Перейти к оформлению</a>
 </div>
 </div>

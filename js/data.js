@@ -1,5 +1,5 @@
 // Практическая работа №16: массив товаров реального каталога магазина.
-// Все товары имеют одинаковые свойства. Наличие, рейтинг и скидки — учебные данные.
+// Все товары имеют одинаковые свойства, включая image и description. Наличие, рейтинг и скидки — учебные данные.
 // Категории соответствуют значениям фильтра в catalog.html.
 const products = [
     {
@@ -9,7 +9,9 @@ const products = [
         price: 5000,
         discountPercent: 10,
         rating: 4.7,
-        isAvailable: true
+        isAvailable: true,
+        image: "images/product-1.jpg",
+        description: "Беспроводные наушники с активным шумоподавлением от внешнего мира."
     },
     {
         id: 2,
@@ -18,7 +20,9 @@ const products = [
         price: 120000,
         discountPercent: 0,
         rating: 4.8,
-        isAvailable: true
+        isAvailable: true,
+        image: "images/product-2.jpg",
+        description: "Игровая станция. Идеальный вариант для гта 6."
     },
     {
         id: 3,
@@ -27,7 +31,9 @@ const products = [
         price: 8000,
         discountPercent: 5,
         rating: 4.5,
-        isAvailable: true
+        isAvailable: true,
+        image: "images/product-3.jpg",
+        description: "Мощный и крутой микрофон. Выбор стримеров и блогеров."
     },
     {
         id: 4,
@@ -36,7 +42,9 @@ const products = [
         price: 40000,
         discountPercent: 0,
         rating: 4.4,
-        isAvailable: true
+        isAvailable: true,
+        image: "images/product-4.jpg",
+        description: "Игровая консоль для игр."
     },
     {
         id: 5,
@@ -45,7 +53,9 @@ const products = [
         price: 65000,
         discountPercent: 15,
         rating: 4.6,
-        isAvailable: false
+        isAvailable: false,
+        image: "images/product-5.jpg",
+        description: "Портативная игровая станция для фанатов покемонов и зельды."
     },
     {
         id: 6,
@@ -54,7 +64,9 @@ const products = [
         price: 7000,
         discountPercent: 0,
         rating: 4.3,
-        isAvailable: true
+        isAvailable: true,
+        image: "images/product-6.jpg",
+        description: "Рычаг управления для игровой станции 4."
     },
     {
         id: 7,
@@ -63,7 +75,9 @@ const products = [
         price: 35000,
         discountPercent: 0,
         rating: 4.5,
-        isAvailable: true
+        isAvailable: true,
+        image: "images/product-7.jpg",
+        description: "Игровая станция. НЕ идеальный вариант для гта 6."
     },
     {
         id: 8,
@@ -72,7 +86,9 @@ const products = [
         price: 2000,
         discountPercent: 0,
         rating: 4.2,
-        isAvailable: true
+        isAvailable: true,
+        image: "images/product-8.jpg",
+        description: "Обычные проводные наушники (база)."
     },
     {
         id: 9,
@@ -81,6 +97,8 @@ const products = [
         price: 1000,
         discountPercent: 5,
         rating: 4.1,
-        isAvailable: false
+        isAvailable: false,
+        image: "images/product-9.jpg",
+        description: "Абсолютно точно функционирующее устройство хранения информации."
     }
 ];

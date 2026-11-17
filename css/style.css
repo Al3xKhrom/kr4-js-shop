@@ -480,3 +480,22 @@ a:focus-visible {
     border-radius: var(--radius-sm);
     font: inherit;
 }
+
+/* Практическая работа №15: учебный вывод JavaScript. */
+.js-check {
+    margin-block: var(--space-lg);
+}
+.js-message {
+    font-weight: 600;
+}
+.product-output {
+    max-width: 100%;
+    padding: 16px;
+    overflow-x: auto;
+    white-space: pre-wrap;
+    overflow-wrap: anywhere;
+    color: #f9fafb;
+    background-color: #111827;
+    border-radius: 8px;
+    line-height: 1.6;
+}

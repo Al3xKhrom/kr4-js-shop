@@ -1,79 +1,168 @@
-// ============================================
-// Практическая работа №15: основы JavaScript.
-// Объект product объявлен в js/data.js.
-// ============================================
+// ================================================================
+// Практическая работа №16: массивы, циклы, поиск, фильтрация,
+// сортировка, расчёты. Массив products загружается из js/data.js.
+// Ниже сохранены функции №15 и обработчики сайта (модальное окно,
+// форма, мобильное меню, фильтры каталога).
+// ================================================================
 console.log('Файл main.js подключён');
-console.log('Объект товара:', product);
-console.table(product);
+console.log('Массив товаров:', products);
+console.table(products);
 
-// Принимает число и возвращает строку с валютой.
+// Практика №15: функции форматирования одного товара.
 function formatPrice(price) {
     return `${price.toLocaleString('ru-RU')} руб.`;
 }
 
-// Возвращает размер скидки в рублях.
 function calculateDiscount(price, discountPercent) {
     return price * discountPercent / 100;
 }
 
-// Возвращает цену товара с учётом скидки.
 function calculateFinalPrice(price, discountPercent) {
-    const discountValue = calculateDiscount(price, discountPercent);
-    return price - discountValue;
+    return price - calculateDiscount(price, discountPercent);
 }
 
-// Использует логический тип и строгое сравнение.
 function getProductStatus(item) {
     if (item.isAvailable === true) {
         return 'В наличии';
+    } else {
+        return 'Нет в наличии';
     }
-    return 'Нет в наличии';
 }
 
-// Объединяет результат нескольких функций в описание.
 function createProductSummary(item) {
     const finalPrice = calculateFinalPrice(item.price, item.discountPercent);
-    const status = getProductStatus(item);
-    return `${item.title}: ${formatPrice(finalPrice)} Статус: ${status}.`;
+    return `${item.title}: ${formatPrice(finalPrice)}. Статус: ${getProductStatus(item)}.`;
 }
 
-const discountValue = calculateDiscount(product.price, product.discountPercent);
-const finalPrice = calculateFinalPrice(product.price, product.discountPercent);
-const productSummary = createProductSummary(product);
+// Практика №16: все восемь обязательных функций.
+// map — создаёт новый массив названий.
+function getProductTitles(products) {
+    return products.map((item) => item.title);
+}
 
-// Операторы сравнения и логические операторы.
-const hasDiscount = product.discountPercent > 0;
-const validDiscount = product.discountPercent >= 0 && product.discountPercent <= 100;
-const canOrder = product.isAvailable === true && finalPrice > 0 && validDiscount;
+// filter — отбирает только товары в наличии.
+function getAvailableProducts(products) {
+    return products.filter((item) => item.isAvailable === true);
+}
 
-console.log('Исходная цена:', formatPrice(product.price));
+// trim + toLowerCase — поиск без учёта регистра и крайних пробелов.
+function searchProducts(products, query) {
+    const normalizedQuery = query.trim().toLowerCase();
+    if (normalizedQuery === '') {
+        return [...products];
+    }
+    return products.filter((item) => item.title.toLowerCase().includes(normalizedQuery));
+}
+
+function filterProductsByCategory(products, category) {
+    if (category === 'all') {
+        return [...products];
+    }
+    return products.filter((item) => item.category === category);
+}
+
+// sort меняет свой массив, поэтому сортируем копию: [...products].
+function sortProductsByPrice(products, direction = 'asc') {
+    const copy = [...products];
+    if (direction === 'desc') {
+        return copy.sort((first, second) => second.price - first.price);
+    } else {
+        return copy.sort((first, second) => first.price - second.price);
+    }
+}
+
+// find возвращает первый объект или undefined (если совпадения нет).
+function findProductById(products, id) {
+    return products.find((item) => item.id === id);
+}
+
+// reduce — суммирует исходные цены товаров из переданного массива.
+function calculateTotalPrice(products) {
+    return products.reduce((sum, item) => sum + item.price, 0);
+}
+
+function countAvailableProducts(products) {
+    return getAvailableProducts(products).length;
+}
+
+// Дополнительные функции из этапов 12 и 13 методических указаний.
+function calculateAveragePrice(products) {
+    if (products.length === 0) {
+        return 0;
+    }
+    return Math.round(calculateTotalPrice(products) / products.length);
+}
+
+function getPreparedProducts(products, query, category, sortDirection = 'asc') {
+    let result = [...products];
+    result = searchProducts(result, query);
+    result = filterProductsByCategory(result, category);
+    result = sortProductsByPrice(result, sortDirection);
+    return result;
+}
+
+// Примеры двух видов циклов и forEach из теоретической части.
+for (let index = 0; index < products.length; index += 1) {
+    console.log(`for — товар №${index + 1}: ${products[index].title}`);
+}
+for (const item of products) {
+    console.log(`for...of — ${item.title}: ${formatPrice(item.price)}`);
+}
+products.forEach((item) => console.log(`forEach — ${item.id}: ${item.title}`));
+
+// Проверка функций в Console — её можно показать преподавателю.
+console.log('Названия (map):', getProductTitles(products));
+console.table(getAvailableProducts(products));
+console.table(searchProducts(products, 'науш'));
+console.table(filterProductsByCategory(products, 'audio'));
+console.table(sortProductsByPrice(products, 'asc'));
+console.table(sortProductsByPrice(products, 'desc'));
+const foundItem = findProductById(products, 3);
+if (foundItem) {
+    console.log('Товар по id=3:', foundItem.title);
+} else {
+    console.log('Товар с id=3 не найден');
+}
+console.log('Общая стоимость:', calculateTotalPrice(products));
+console.log('В наличии:', countAvailableProducts(products));
+console.log('Средняя цена:', calculateAveragePrice(products));
+console.table(getPreparedProducts(products, 'науш', 'audio', 'asc'));
+
+// КР №15 тоже продолжает работать: для примера берём элемент массива.
+const featuredProduct = products[0];
+const discountValue = calculateDiscount(featuredProduct.price, featuredProduct.discountPercent);
+const finalPrice = calculateFinalPrice(featuredProduct.price, featuredProduct.discountPercent);
+const productSummary = createProductSummary(featuredProduct);
+const hasDiscount = featuredProduct.discountPercent > 0;
+const validDiscount = featuredProduct.discountPercent >= 0 && featuredProduct.discountPercent <= 100;
+const canOrder = featuredProduct.isAvailable === true && finalPrice > 0 && validDiscount;
+console.log('Практика №15 — товар:', productSummary);
 console.log('Скидка:', formatPrice(discountValue));
-console.log('Итоговая цена:', formatPrice(finalPrice));
-console.log('Статус:', getProductStatus(product));
-console.log('Краткое описание:', productSummary);
-console.log('Есть скидка:', hasDiscount);
-console.log('Скидка корректна:', validDiscount);
-console.log('Можно заказать:', canOrder);
+console.log('Можно заказать:', canOrder, 'Есть скидка:', hasDiscount);
 
-// Безопасный вывод: текст интерпретируется как текст, не как HTML.
+// Безопасный вывод результата: textContent, а не innerHTML.
 const jsMessageElement = document.querySelector('.js-message');
 const productOutputElement = document.querySelector('.product-output');
 if (jsMessageElement) {
-    jsMessageElement.textContent = 'JavaScript подключён корректно.';
+    jsMessageElement.textContent = 'Массив товаров и функции обработки данных подключены.';
 }
 if (productOutputElement) {
+    const audioProducts = filterProductsByCategory(products, 'audio');
+    const matchedProducts = searchProducts(products, 'науш');
     productOutputElement.textContent = [
-        `Товар: ${product.title}`,
-        `Исходная цена: ${formatPrice(product.price)}`,
-        `Скидка: ${product.discountPercent}% (${formatPrice(discountValue)})`,
-        `Цена со скидкой: ${formatPrice(finalPrice)}`,
-        `Статус: ${getProductStatus(product)}`,
-        `Можно заказать: ${canOrder ? 'Да' : 'Нет'}`,
+        `Всего товаров: ${products.length}`,
+        `Товаров в наличии: ${countAvailableProducts(products)}`,
+        `Средняя цена: ${formatPrice(calculateAveragePrice(products))}`,
+        `Общая стоимость всех товаров: ${formatPrice(calculateTotalPrice(products))}`,
+        `Товаров в категории «Аудиотехника»: ${audioProducts.length}`,
+        `Результатов поиска «науш»: ${matchedProducts.length}`,
+        `Товары со скидкой: ${products.filter((item) => item.discountPercent > 0).length}`,
         '',
-        productSummary
+        `Пример описания: ${productSummary}`
     ].join('\n');
 }
 
+// Обработчики из предыдущих практик сохранены ниже.
 const orderDialog = document.getElementById('order-dialog');
 const selectedProduct = document.getElementById('selected-product');
 let dialogTrigger = null;

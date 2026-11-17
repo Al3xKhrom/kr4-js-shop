@@ -499,3 +499,10 @@ a:focus-visible {
     border-radius: 8px;
     line-height: 1.6;
 }
+
+/* Практика №16: статическое отображение недоступных товаров. */
+.product-card .button:disabled,
+.product-card .button[aria-disabled="true"] {
+    opacity: 0.65;
+    cursor: not-allowed;
+}

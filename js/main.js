@@ -1,3 +1,79 @@
+// ============================================
+// Практическая работа №15: основы JavaScript.
+// Объект product объявлен в js/data.js.
+// ============================================
+console.log('Файл main.js подключён');
+console.log('Объект товара:', product);
+console.table(product);
+
+// Принимает число и возвращает строку с валютой.
+function formatPrice(price) {
+    return `${price.toLocaleString('ru-RU')} руб.`;
+}
+
+// Возвращает размер скидки в рублях.
+function calculateDiscount(price, discountPercent) {
+    return price * discountPercent / 100;
+}
+
+// Возвращает цену товара с учётом скидки.
+function calculateFinalPrice(price, discountPercent) {
+    const discountValue = calculateDiscount(price, discountPercent);
+    return price - discountValue;
+}
+
+// Использует логический тип и строгое сравнение.
+function getProductStatus(item) {
+    if (item.isAvailable === true) {
+        return 'В наличии';
+    }
+    return 'Нет в наличии';
+}
+
+// Объединяет результат нескольких функций в описание.
+function createProductSummary(item) {
+    const finalPrice = calculateFinalPrice(item.price, item.discountPercent);
+    const status = getProductStatus(item);
+    return `${item.title}: ${formatPrice(finalPrice)} Статус: ${status}.`;
+}
+
+const discountValue = calculateDiscount(product.price, product.discountPercent);
+const finalPrice = calculateFinalPrice(product.price, product.discountPercent);
+const productSummary = createProductSummary(product);
+
+// Операторы сравнения и логические операторы.
+const hasDiscount = product.discountPercent > 0;
+const validDiscount = product.discountPercent >= 0 && product.discountPercent <= 100;
+const canOrder = product.isAvailable === true && finalPrice > 0 && validDiscount;
+
+console.log('Исходная цена:', formatPrice(product.price));
+console.log('Скидка:', formatPrice(discountValue));
+console.log('Итоговая цена:', formatPrice(finalPrice));
+console.log('Статус:', getProductStatus(product));
+console.log('Краткое описание:', productSummary);
+console.log('Есть скидка:', hasDiscount);
+console.log('Скидка корректна:', validDiscount);
+console.log('Можно заказать:', canOrder);
+
+// Безопасный вывод: текст интерпретируется как текст, не как HTML.
+const jsMessageElement = document.querySelector('.js-message');
+const productOutputElement = document.querySelector('.product-output');
+if (jsMessageElement) {
+    jsMessageElement.textContent = 'JavaScript подключён корректно.';
+}
+if (productOutputElement) {
+    productOutputElement.textContent = [
+        `Товар: ${product.title}`,
+        `Исходная цена: ${formatPrice(product.price)}`,
+        `Скидка: ${product.discountPercent}% (${formatPrice(discountValue)})`,
+        `Цена со скидкой: ${formatPrice(finalPrice)}`,
+        `Статус: ${getProductStatus(product)}`,
+        `Можно заказать: ${canOrder ? 'Да' : 'Нет'}`,
+        '',
+        productSummary
+    ].join('\n');
+}
+
 const orderDialog = document.getElementById('order-dialog');
 const selectedProduct = document.getElementById('selected-product');
 let dialogTrigger = null;
